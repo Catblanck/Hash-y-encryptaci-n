@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -17,31 +17,48 @@ namespace Hash_y_encryptación
         }
         
         private void buttonLogin_Click(object sender, EventArgs e)
-        {
-            string usuarioIngresado = txtUsername.Text;
-            string passwordIngresado = txtPassword.Text;
-
-            if (usuarioIngresado == "Username" || string.IsNullOrWhiteSpace(usuarioIngresado))
-            {
-                MessageBox.Show("Por favor ingresa un usuario válido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            ConexionBD conexionBd = new ConexionBD();
-            try
-            {
-                var conexion = conexionBd.ObtenerConexion();
-                conexion.Open();
-
-                MessageBox.Show("¡Conexión exitosa!", " ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
-                conexion.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(string.Format("Error al conectar con la base de datos", ex.Message), "Fallo de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+		{
+		    string usuarioIngresado = txtUsername.Text;
+		    string passwordIngresado = txtPassword.Text;
+		
+		    if (usuarioIngresado == "Username" || string.IsNullOrWhiteSpace(usuarioIngresado))
+		    {
+		        MessageBox.Show("Por favor ingresa un usuario válido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		        return;
+		    }
+		    if (passwordIngresado == "Password" || string.IsNullOrWhiteSpace(passwordIngresado))
+		    {
+		        MessageBox.Show("Por favor ingresa una contraseña.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		        return;
+		    }
+		
+		    UsuarioDAO dao = new UsuarioDAO();
+		    string rol = dao.Login(usuarioIngresado, passwordIngresado);
+		
+		    if (rol != null)
+		    {
+		        MenuPrincipalForm menu = new MenuPrincipalForm(rol);
+		        LimpiarCampos();
+		        this.Hide();
+		        menu.Show();
+		    }
+		    else
+		    {
+		        MessageBox.Show("Usuario o contraseña incorrectos, o usuario inactivo.", "Error de Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		    }
+		    
+		    
+		}
+        
+        private void LimpiarCampos()
+		{
+		    txtUsername.Text = "Username";
+		    labelUsername.Visible = false;
+		    
+		    txtPassword.Text = "Password";
+		    txtPassword.PasswordChar = '\0';
+		    labelpassword.Visible = false;
+		}
         
         private void txtUsername_Enter(object sender, EventArgs e)
         {
@@ -81,3 +98,4 @@ namespace Hash_y_encryptación
             }
         }
     }
+}

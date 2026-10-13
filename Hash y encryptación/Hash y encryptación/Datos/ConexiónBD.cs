@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using MySql.Data.MySqlClient;
 
@@ -6,10 +6,10 @@ namespace Hash_y_encryptación.Datos
 {
     public class ConexionBD
     {
-        private string servidor = "tallerbasededatos.mysql.database.azure.com";
-        private string baseDatos = "empresa_db";
-        private string usuario = "SaulJasso";
-        private string password = "Soulkzj14";
+        private string servidor = "localhost";
+        private string baseDatos = "SistemaTienda";
+        private string usuario = "root";
+        private string password = "rico";
         private string puerto = "3306";
         
         private MySqlConnection conexion;
