@@ -64,11 +64,7 @@ namespace Hash_y_encryptación.Datos
 		                query = @"SELECT 
 		                            userName as 'USER ID', firstName as 'FIRST NAME', lastName as 'LAST NAME', 
 		                            email as 'EMAIL ADDRESS', sucursal as 'SUCURSAL', puesto as 'PUESTO', 
-		                            userStatus as 'STATUS', rol as 'ROLE', 
-		                            '*** OCULTO ***' as 'CURP',
-		                            '*** OCULTO ***' as 'RFC',
-		                            '*** OCULTO ***' as 'CUENTA',
-		                            '*** OCULTO ***' as 'SALARIO'
+		                            userStatus as 'STATUS', rol as 'ROLE'
 		                          FROM EmpleadosTienda";
 		            }
 		

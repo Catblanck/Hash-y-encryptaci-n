@@ -38,5 +38,6 @@ namespace Hash_y_encryptación
 		        menuForm.Show();
 		    }
 		}
+		
 	}
 }

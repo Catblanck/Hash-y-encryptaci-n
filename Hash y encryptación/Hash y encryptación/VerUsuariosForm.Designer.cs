@@ -36,25 +36,15 @@ namespace Hash_y_encryptación
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.btnRegresar = new System.Windows.Forms.Button();
+			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// dataGridView1
-			// 
-			this.dataGridView1.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-			this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-			this.dataGridView1.Location = new System.Drawing.Point(1, -2);
-			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(1415, 546);
-			this.dataGridView1.TabIndex = 2;
 			// 
 			// btnRegresar
 			// 
 			this.btnRegresar.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.btnRegresar.Location = new System.Drawing.Point(634, 561);
+			this.btnRegresar.Location = new System.Drawing.Point(353, 507);
 			this.btnRegresar.Name = "btnRegresar";
 			this.btnRegresar.Size = new System.Drawing.Size(132, 42);
 			this.btnRegresar.TabIndex = 1;
@@ -62,20 +52,18 @@ namespace Hash_y_encryptación
 			this.btnRegresar.UseVisualStyleBackColor = true;
 			this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
 			// 
-			// VerUsuariosForm
+			// dataGridView1
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1416, 618);
-			this.Controls.Add(this.btnRegresar);
-			this.Controls.Add(this.dataGridView1);
-			this.Name = "VerUsuariosForm";
-			this.Text = "VerUsuarios";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.VerUsuariosForm_FormClosed);
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-			this.ResumeLayout(false);
+			this.dataGridView1.AllowUserToOrderColumns = true;
+			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.RowTemplate.Height = 24;
+			this.dataGridView1.Size = new System.Drawing.Size(875, 561);
+			this.dataGridView1.TabIndex = 2;
 		}
-		private System.Windows.Forms.Button btnRegresar;
 		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.Button btnRegresar;
 	}
 }
