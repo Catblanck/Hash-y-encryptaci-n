@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -23,16 +23,20 @@ namespace Hash_y_encryptación
             }
         }
         
-        private void btnAgregarUsuario_Click(object sender, EventArgs e)
+        private void btnAgregarEmpleado_Click(object sender, EventArgs e)
         {
-            AgregarEmpleadoForm form = new AgregarEmpleadoForm();
+        	this.Hide();
+            AgregarEmpleado form = new AgregarEmpleado();
 			form.ShowDialog();
+			this.Show();
         }
         
-        private void btnVerUsuarios_Click(object sender, EventArgs e)
+        private void btnVerEmpleado_Click(object sender, EventArgs e)
         {
+        	this.Hide();
             VerUsuariosForm formGrid = new VerUsuariosForm(rolUsuarioActual);
             formGrid.ShowDialog();
+            this.Show();
         }
         
         private void btnSalir_Click(object sender, EventArgs e)

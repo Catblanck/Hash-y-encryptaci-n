@@ -5,16 +5,16 @@ using Hash_y_encryptación.Datos;
 
 namespace Hash_y_encryptación
 {
-    public partial class AgregarEmpleadoForm : Form
+    public partial class AgregarEmpleado : Form
     {
         private int? idUsuarioModificar = null;
 
-        public AgregarEmpleadoForm()
+        public AgregarEmpleado()
         {
             InitializeComponent(); 
         }
 
-        public AgregarEmpleadoForm(int id, string userName, string firstName, string lastName, string gender, string email, string sucursal, string puesto, string rol, string phone, string address)
+        public AgregarEmpleado(int id, string userName, string firstName, string lastName, string gender, string email, string sucursal, string puesto, string rol, string phone, string address, string curp, string rfc, string cuenta, string salario)
         {
             InitializeComponent();
             idUsuarioModificar = id;
@@ -29,6 +29,10 @@ namespace Hash_y_encryptación
             cmbRol.SelectedItem = rol;
             txtPhone.Text = phone;
             txtAddress.Text = address;
+            txtCurp.Text = curp;
+            txtRfc.Text = rfc;
+            txtCuentaBancaria.Text = cuenta;
+            txtSalario.Text = salario;
         }
         
         void BtnGuardarClick(object sender, EventArgs e)
@@ -126,16 +130,13 @@ namespace Hash_y_encryptación
                 menuForm.Show();
             }
         }
-        void Label1Click(object sender, EventArgs e)
-{
-}
+        
+        private void Label1Click(object sender, EventArgs e)
+        {
+        }
 
-void Button1Click(object sender, EventArgs e)
-{
-}
-
-void AgregarEmpleadoFormLoad(object sender, EventArgs e)
-{
-}
+        private void AgregarEmpleadoFormLoad(object sender, EventArgs e)
+        {
+        }
     }
 }

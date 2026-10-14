@@ -39,61 +39,57 @@ namespace Hash_y_encryptación.Datos
         }
         
         public DataTable ObtenerUsuarios(string rolUsuarioActual)
-{
-    DataTable dt = new DataTable();
-    try
-    {
-        using (MySqlConnection conexion = conexionBd.ObtenerConexion())
-        {
-            conexion.Open();
-            string query = "";
-            if (rolUsuarioActual == "Administrador")
-            {
-                query = @"SELECT 
-                            idUsuario as 'ID',
-                            userName as 'USER ID', firstName as 'FIRST NAME', lastName as 'LAST NAME', 
-                            email as 'EMAIL ADDRESS', sucursal as 'SUCURSAL', puesto as 'PUESTO', 
-                            userStatus as 'STATUS', rol as 'ROLE', 
-                            CAST(AES_DECRYPT(curp, 'TuClaveSecreta') AS CHAR) as 'CURP',
-                            CAST(AES_DECRYPT(rfc, 'TuClaveSecreta') AS CHAR) as 'RFC',
-                            CAST(AES_DECRYPT(cuentaBancaria, 'TuClaveSecreta') AS CHAR) as 'CUENTA',
-                            CAST(AES_DECRYPT(salario, 'TuClaveSecreta') AS CHAR) as 'SALARIO'
-                          FROM EmpleadosTienda";
-            }
-            else
-            {
-                query = @"SELECT 
-                            idUsuario as 'ID',
-                            userName as 'USER ID', firstName as 'FIRST NAME', lastName as 'LAST NAME', 
-                            email as 'EMAIL ADDRESS', sucursal as 'SUCURSAL', puesto as 'PUESTO', 
-                            userStatus as 'STATUS', rol as 'ROLE', 
-                            '*** OCULTO ***' as 'CURP',
-                            '*** OCULTO ***' as 'RFC',
-                            '*** OCULTO ***' as 'CUENTA',
-                            '*** OCULTO ***' as 'SALARIO'
-                          FROM EmpleadosTienda";
-            }
-
-            using (MySqlCommand cmd = new MySqlCommand(query, conexion))
-            {
-                using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-                {
-                    da.Fill(dt);
-                }
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        System.Windows.Forms.MessageBox.Show("Error al cargar la lista: " + ex.Message);
-    }
-    return dt;
-}
+		{
+		    DataTable dt = new DataTable();
+		    try
+		    {
+		        using (MySqlConnection conexion = conexionBd.ObtenerConexion())
+		        {
+		            conexion.Open();
+		            string query = "";
+		            if (rolUsuarioActual == "Administrador")
+		            {
+		                query = @"SELECT 
+		                            idUsuario as 'ID',
+		                            userName as 'USER ID', firstName as 'FIRST NAME', lastName as 'LAST NAME', 
+		                            email as 'EMAIL ADDRESS', sucursal as 'SUCURSAL', puesto as 'PUESTO', 
+		                            userStatus as 'STATUS', rol as 'ROLE', 
+		                            CAST(AES_DECRYPT(curp, 'ClaveSecretaCURP') AS CHAR) as 'CURP',
+		                            CAST(AES_DECRYPT(rfc, 'ClaveSecretaRFC') AS CHAR) as 'RFC',
+		                            CAST(AES_DECRYPT(cuentaBancaria, 'ClaveSecretaCuentaB') AS CHAR) as 'CUENTA',
+		                            CAST(AES_DECRYPT(salario, 'ClaveSecretaSalario') AS CHAR) as 'SALARIO'
+		                          FROM EmpleadosTienda";
+		            }
+		            else
+		            {
+		                query = @"SELECT 
+		                            idUsuario as 'ID',
+		                            userName as 'USER ID', firstName as 'FIRST NAME', lastName as 'LAST NAME', 
+		                            email as 'EMAIL ADDRESS', sucursal as 'SUCURSAL', puesto as 'PUESTO', 
+		                            userStatus as 'STATUS', rol as 'ROLE'
+		                          FROM EmpleadosTienda";
+		            }
+		
+		            using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+		            {
+		                using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+		                {
+		                    da.Fill(dt);
+		                }
+		            }
+		        }
+		    }
+		    catch (Exception ex)
+		    {
+		        System.Windows.Forms.MessageBox.Show("Error al cargar la lista: " + ex.Message);
+		    }
+		    return dt;
+		}
 
         public bool RegistrarEmpleado(string userName, string password, string firstName, string lastName, string gender, string email, string sucursal, string puesto, string rol, string phone, string address, string birthdate, string curp, string rfc, string cuentaBancaria, string salario)
         {
             bool exito = false;
-            string query = "INSERT INTO EmpleadosTienda (userName, password, firstName, lastName, gender, email, sucursal, puesto, rol, phone, address, birthdate, curp, rfc, cuentaBancaria, salario) VALUES (@userName, SHA2(@password, 256), @firstName, @lastName, @gender, @email, @sucursal, @puesto, @rol, @phone, @address, @birthdate, AES_ENCRYPT(@curp, 'TuClaveSecreta'), AES_ENCRYPT(@rfc, 'TuClaveSecreta'), AES_ENCRYPT(@cuentaBancaria, 'TuClaveSecreta'), AES_ENCRYPT(@salario, 'TuClaveSecreta'))";
+            string query = "INSERT INTO EmpleadosTienda (userName, password, firstName, lastName, gender, email, sucursal, puesto, rol, phone, address, birthdate, curp, rfc, cuentaBancaria, salario) VALUES (@userName, SHA2(@password, 256), @firstName, @lastName, @gender, @email, @sucursal, @puesto, @rol, @phone, @address, @birthdate, AES_ENCRYPT(@curp, 'ClaveSecretaCURP'), AES_ENCRYPT(@rfc, 'ClaveSecretaRFC'), AES_ENCRYPT(@cuentaBancaria, 'ClaveSecretaCuentaB'), AES_ENCRYPT(@salario, 'ClaveSecretaSalario'))";
 
             try
             {
@@ -136,40 +132,40 @@ namespace Hash_y_encryptación.Datos
         }
 
         public bool ActualizarEmpleado(int idUsuario, string userName, string firstName, string lastName, string gender, string email, string sucursal, string puesto, string rol, string phone, string address, string salario)
-	{
-    using (MySqlConnection conexion = conexionBd.ObtenerConexion())
-    	{
-        string query = "UPDATE EmpleadosTienda SET userName = @userName, firstName = @firstName, lastName = @lastName, gender = @gender, email = @email, sucursal = @sucursal, puesto = @puesto, rol = @rol, phone = @phone, address = @address, salario = AES_ENCRYPT(@salario, 'TuClaveSecreta') WHERE idUsuario = @idUsuario";
-        
-        using (MySqlCommand comando = new MySqlCommand(query, conexion))
-        	{
-            comando.Parameters.AddWithValue("@idUsuario", idUsuario);
-            comando.Parameters.AddWithValue("@userName", userName);
-            comando.Parameters.AddWithValue("@firstName", firstName);
-            comando.Parameters.AddWithValue("@lastName", lastName);
-            comando.Parameters.AddWithValue("@gender", gender);
-            comando.Parameters.AddWithValue("@email", email);
-            comando.Parameters.AddWithValue("@sucursal", sucursal);
-            comando.Parameters.AddWithValue("@puesto", puesto);
-            comando.Parameters.AddWithValue("@rol", rol);
-            comando.Parameters.AddWithValue("@phone", phone);
-            comando.Parameters.AddWithValue("@address", address);
-            comando.Parameters.AddWithValue("@salario", salario);
-
-            try
-            {
-                conexion.Open();
-                int filasAfectadas = comando.ExecuteNonQuery();
-                return filasAfectadas > 0;
-            }
-            catch (Exception ex)
-            	{
-                System.Windows.Forms.MessageBox.Show("Error al actualizar: " + ex.Message);
-                return false;
-            	}
-        	}
-   		}
-	}	
+		{
+	    using (MySqlConnection conexion = conexionBd.ObtenerConexion())
+	    	{
+	        string query = "UPDATE EmpleadosTienda SET userName = @userName, firstName = @firstName, lastName = @lastName, gender = @gender, email = @email, sucursal = @sucursal, puesto = @puesto, rol = @rol, phone = @phone, address = @address, salario = AES_ENCRYPT(@salario, 'ClaveSecretaSalario') WHERE idUsuario = @idUsuario";
+	        
+	        using (MySqlCommand comando = new MySqlCommand(query, conexion))
+	        	{
+	            comando.Parameters.AddWithValue("@idUsuario", idUsuario);
+	            comando.Parameters.AddWithValue("@userName", userName);
+	            comando.Parameters.AddWithValue("@firstName", firstName);
+	            comando.Parameters.AddWithValue("@lastName", lastName);
+	            comando.Parameters.AddWithValue("@gender", gender);
+	            comando.Parameters.AddWithValue("@email", email);
+	            comando.Parameters.AddWithValue("@sucursal", sucursal);
+	            comando.Parameters.AddWithValue("@puesto", puesto);
+	            comando.Parameters.AddWithValue("@rol", rol);
+	            comando.Parameters.AddWithValue("@phone", phone);
+	            comando.Parameters.AddWithValue("@address", address);
+	            comando.Parameters.AddWithValue("@salario", salario);
+	
+	            try
+	            {
+	                conexion.Open();
+	                int filasAfectadas = comando.ExecuteNonQuery();
+	                return filasAfectadas > 0;
+	            }
+	            catch (Exception ex)
+	            	{
+	                System.Windows.Forms.MessageBox.Show("Error al actualizar: " + ex.Message);
+	                return false;
+	            	}
+	        	}
+	   		}
+		}	
 
         public bool EliminarEmpleado(int idUsuario)
         {
