@@ -6,7 +6,7 @@ namespace Hash_y_encryptación.Datos
 {
     public class ConexionBD
     {
-        private string servidor = "tallerbasededatos.mysql.database.azure.com";
+        private string servidor = "localhost";
         private string baseDatos = "sistematienda";
         private string usuario = "SaulZJ";
         private string password = "clave123";

@@ -17,16 +17,6 @@ namespace Hash_y_encryptación
             InitializeComponent();
             rolActual = rol;
             CargarDatos();
-            AplicarPermisos();
-        }
-        
-        private void AplicarPermisos()
-        {
-            if (rolActual != null && rolActual.Trim().Equals("Empleado", StringComparison.OrdinalIgnoreCase))
-            {
-                btnModificar.Enabled = false;
-                btnEliminar.Enabled = false;
-            }
         }
         
         private void CargarDatos()
@@ -43,6 +33,11 @@ namespace Hash_y_encryptación
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+        	if (rolActual != null && rolActual.Trim().Equals("Empleado", StringComparison.OrdinalIgnoreCase))
+		    {
+		        MessageBox.Show("Tu nivel de usuario no tiene permisos para eliminar registros.", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		        return;
+		    }
             if (dataGridView2.SelectedRows.Count > 0)
             {
                 int idUsuario = Convert.ToInt32(dataGridView2.SelectedRows[0].Cells[0].Value);
@@ -70,44 +65,52 @@ namespace Hash_y_encryptación
             }
         }
 
-        private void btnModificar_Click(object sender, EventArgs e)
-        {
-            if (dataGridView2.SelectedRows.Count > 0)
-            {
-                DataGridViewRow fila = dataGridView2.SelectedRows[0];
-                
-                int id = fila.Cells[0].Value != null ? Convert.ToInt32(fila.Cells[0].Value) : 0;
-                string userName = fila.Cells[1].Value != null ? fila.Cells[1].Value.ToString() : "";
-                string firstName = fila.Cells[2].Value != null ? fila.Cells[2].Value.ToString() : "";
-                string lastName = fila.Cells[3].Value != null ? fila.Cells[3].Value.ToString() : "";
-                string email = fila.Cells[4].Value != null ? fila.Cells[4].Value.ToString() : "";
-                string sucursal = fila.Cells[5].Value != null ? fila.Cells[5].Value.ToString() : "";
-                string puesto = fila.Cells[6].Value != null ? fila.Cells[6].Value.ToString() : "";
-                string rol = fila.Cells[8].Value != null ? fila.Cells[8].Value.ToString() : "";
-                string curp = fila.Cells.Count > 9 && fila.Cells[9].Value != null ? fila.Cells[9].Value.ToString() : "";
-                string rfc = fila.Cells.Count > 10 && fila.Cells[10].Value != null ? fila.Cells[10].Value.ToString() : "";
-                string cuenta = fila.Cells.Count > 11 && fila.Cells[11].Value != null ? fila.Cells[11].Value.ToString() : "";
-                string salario = fila.Cells.Count > 12 && fila.Cells[12].Value != null ? fila.Cells[12].Value.ToString() : "";
-
-                string phone = "";
-                string address = "";
-
-                AgregarEmpleado formModificar = new AgregarEmpleado(
-                    id, userName, firstName, lastName, "Masculino", email, sucursal, puesto, rol, phone, address, curp, rfc, cuenta, salario
-                );
-                
-                formModificar.ShowDialog();
-                CargarDatos();
-            }
-            else
-            {
-                MessageBox.Show("Selecciona una fila para modificar.");
-            }
-        }
         
+        private void btnModificar_Click(object sender, EventArgs e)
+		{
+        	if (rolActual != null && rolActual.Trim().Equals("Empleado", StringComparison.OrdinalIgnoreCase))
+		    {
+		        MessageBox.Show("Tu nivel de usuario no tiene permisos para modificar registros.", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		        return; 
+		    }
+		    if (dataGridView2.SelectedRows.Count > 0)
+		    {
+		        DataGridViewRow fila = dataGridView2.SelectedRows[0];
+		        
+		        int id = fila.Cells[0].Value != null ? Convert.ToInt32(fila.Cells[0].Value) : 0;
+		        string userName = fila.Cells[1].Value != null ? fila.Cells[1].Value.ToString() : "";
+		        string firstName = fila.Cells[2].Value != null ? fila.Cells[2].Value.ToString() : "";
+		        string lastName = fila.Cells[3].Value != null ? fila.Cells[3].Value.ToString() : "";
+		        string email = fila.Cells[4].Value != null ? fila.Cells[4].Value.ToString() : "";
+		        string sucursal = fila.Cells[5].Value != null ? fila.Cells[5].Value.ToString() : "";
+		        string puesto = fila.Cells[6].Value != null ? fila.Cells[6].Value.ToString() : "";
+		        string rol = fila.Cells[8].Value != null ? fila.Cells[8].Value.ToString() : "";
+		        string phone = fila.Cells.Count > 10 && fila.Cells[10].Value != null ? fila.Cells[10].Value.ToString() : "";
+		        string address = fila.Cells.Count > 11 && fila.Cells[11].Value != null ? fila.Cells[11].Value.ToString() : "";
+				string birthdate = fila.Cells.Count > 12 && fila.Cells[12].Value != null ? fila.Cells[12].Value.ToString() : "";
+		        string curp = fila.Cells.Count > 13 && fila.Cells[13].Value != null ? fila.Cells[13].Value.ToString() : "";
+		        string rfc = fila.Cells.Count > 14 && fila.Cells[14].Value != null ? fila.Cells[14].Value.ToString() : "";
+		        string cuenta = fila.Cells.Count > 15 && fila.Cells[15].Value != null ? fila.Cells[15].Value.ToString() : "";
+		        string salario = fila.Cells.Count > 16 && fila.Cells[16].Value != null ? fila.Cells[16].Value.ToString() : "";
+		
+		        AgregarEmpleado formModificar = new AgregarEmpleado(
+		            id, userName, firstName, lastName, "Masculino", email, sucursal, puesto, rol, phone, address, birthdate, curp, rfc, cuenta, salario
+		        );
+		        
+		        this.Hide();
+		        formModificar.ShowDialog();
+		        CargarDatos();
+		        this.Show();
+		    }
+		    else
+		    {
+		        MessageBox.Show("Selecciona una fila para modificar.");
+		    }
+		}
+		        
         private void VerUsuariosForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Form menuForm = Application.OpenForms["MenuPrincipalForm"];
+            Form menuForm = Application.OpenForms["MenuPrincipal"];
             if (menuForm != null)
             {
                 menuForm.Show();

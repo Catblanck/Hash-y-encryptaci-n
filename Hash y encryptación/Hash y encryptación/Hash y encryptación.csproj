@@ -50,8 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgregarEmpleadoForm.cs" />
-    <Compile Include="AgregarEmpleadoForm.Designer.cs" />
+    <Compile Include="AgregarEmpleado.cs" />
+    <Compile Include="AgregarEmpleado.Designer.cs" />
     <Compile Include="Datos\ConexiónBD.cs" />
     <Compile Include="Datos\UsuarioDAO.cs" />
     <Compile Include="MainForm.cs" />
@@ -70,7 +70,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AgregarEmpleadoForm.resx" />
+    <EmbeddedResource Include="AgregarEmpleado.resx" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

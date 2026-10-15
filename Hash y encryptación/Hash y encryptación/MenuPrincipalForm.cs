@@ -12,19 +12,15 @@ namespace Hash_y_encryptación
         {
             InitializeComponent();
             rolUsuarioActual = rol;
-            AplicarPermisos(); 
-        }
-
-        private void AplicarPermisos()
-        {
-            if (rolUsuarioActual == "Empleado")
-            {
-                btnAgregarUsuario.Enabled = false; 
-            }
         }
         
         private void btnAgregarEmpleado_Click(object sender, EventArgs e)
         {
+        	if (rolUsuarioActual != null && rolUsuarioActual.Trim().Equals("Empleado", StringComparison.OrdinalIgnoreCase))
+			{
+			    MessageBox.Show("Tu nivel de usuario no tiene permisos para agregar nuevos registros.", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			    return;
+			}
         	this.Hide();
             AgregarEmpleado form = new AgregarEmpleado();
 			form.ShowDialog();

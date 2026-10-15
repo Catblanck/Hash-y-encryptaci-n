@@ -53,7 +53,8 @@ namespace Hash_y_encryptación.Datos
 		                            idUsuario as 'ID',
 		                            userName as 'USER ID', firstName as 'FIRST NAME', lastName as 'LAST NAME', 
 		                            email as 'EMAIL ADDRESS', sucursal as 'SUCURSAL', puesto as 'PUESTO', 
-		                            userStatus as 'STATUS', rol as 'ROLE', 
+		                            userStatus as 'STATUS', rol as 'ROLE', createdDate as 'CREATED DATE', phone as 'PHONE',
+									address	as 'ADDRESS', birthdate as 'BIRTHDATE',
 		                            CAST(AES_DECRYPT(curp, 'ClaveSecretaCURP') AS CHAR) as 'CURP',
 		                            CAST(AES_DECRYPT(rfc, 'ClaveSecretaRFC') AS CHAR) as 'RFC',
 		                            CAST(AES_DECRYPT(cuentaBancaria, 'ClaveSecretaCuentaB') AS CHAR) as 'CUENTA',
@@ -66,7 +67,8 @@ namespace Hash_y_encryptación.Datos
 		                            idUsuario as 'ID',
 		                            userName as 'USER ID', firstName as 'FIRST NAME', lastName as 'LAST NAME', 
 		                            email as 'EMAIL ADDRESS', sucursal as 'SUCURSAL', puesto as 'PUESTO', 
-		                            userStatus as 'STATUS', rol as 'ROLE'
+		                            userStatus as 'STATUS', rol as 'ROLE', createdDate as 'CREATED DATE', phone as 'PHONE',
+									address	as 'ADDRESS', birthdate as 'BIRTHDATE'
 		                          FROM EmpleadosTienda";
 		            }
 		
@@ -131,11 +133,11 @@ namespace Hash_y_encryptación.Datos
             return exito;
         }
 
-        public bool ActualizarEmpleado(int idUsuario, string userName, string firstName, string lastName, string gender, string email, string sucursal, string puesto, string rol, string phone, string address, string salario)
+        public bool ActualizarEmpleado(int idUsuario, string userName, string firstName, string lastName, string gender, string email, string sucursal, string puesto, string rol, string phone, string address, string birthdate, string curp, string rfc, string cuentaBancaria, string salario)
 		{
 	    using (MySqlConnection conexion = conexionBd.ObtenerConexion())
 	    	{
-	        string query = "UPDATE EmpleadosTienda SET userName = @userName, firstName = @firstName, lastName = @lastName, gender = @gender, email = @email, sucursal = @sucursal, puesto = @puesto, rol = @rol, phone = @phone, address = @address, salario = AES_ENCRYPT(@salario, 'ClaveSecretaSalario') WHERE idUsuario = @idUsuario";
+	        string query = "UPDATE EmpleadosTienda SET userName = @userName, firstName = @firstName, lastName = @lastName, gender = @gender, email = @email, sucursal = @sucursal, puesto = @puesto, rol = @rol, phone = @phone, address = @address, birthdate = @birthdate, curp = AES_ENCRYPT(@curp, 'ClaveSecretaCURP'), rfc = AES_ENCRYPT(@rfc, 'ClaveSecretaRFC'), cuentaBancaria = AES_ENCRYPT(@cuentaBancaria, 'ClaveSecretaCuentaB'),  salario = AES_ENCRYPT(@salario, 'ClaveSecretaSalario') WHERE idUsuario = @idUsuario";
 	        
 	        using (MySqlCommand comando = new MySqlCommand(query, conexion))
 	        	{
@@ -150,7 +152,12 @@ namespace Hash_y_encryptación.Datos
 	            comando.Parameters.AddWithValue("@rol", rol);
 	            comando.Parameters.AddWithValue("@phone", phone);
 	            comando.Parameters.AddWithValue("@address", address);
+	            comando.Parameters.AddWithValue("@birthdate", birthdate);
+                comando.Parameters.AddWithValue("@curp", curp);
+                comando.Parameters.AddWithValue("@rfc", rfc);
+                comando.Parameters.AddWithValue("@cuentaBancaria", cuentaBancaria);
 	            comando.Parameters.AddWithValue("@salario", salario);
+	            
 	
 	            try
 	            {
